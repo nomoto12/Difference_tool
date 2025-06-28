@@ -21,10 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         row.innerHTML = `
             <span>${dataRowsContainer.children.length + 1}回目</span>
-            <input type="number" class="hama-input" value="${hama}">
-            <input type="number" class="bb-input" value="${bb}" data-random-bbg="${initialRandomBBG}">
-            <span class="current-digest-g">[ - ]0.0</span>
-            <span class="digest-g">[ - ]0.0</span>
+            <input type="number" class="hama-input" value="${parseInt(hama)}">
+            <input type="number" class="bb-input" value="${parseInt(bb)}" data-random-bbg="${initialRandomBBG}">
+            <span class="current-digest-g">[ - ]0</span>
+            <span class="digest-g">[ - ]0</span>
             <span class="cumulative-diff">0.0</span>
             <button class="delete-row">削除</button>
         `;
@@ -68,8 +68,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let runningCumulativeDigestG = 0;
 
         Array.from(dataRowsContainer.children).forEach(row => {
-            const hama = parseFloat(row.querySelector('.hama-input').value) || 0;
-            const bb = parseFloat(row.querySelector('.bb-input').value) || 0;
+            const hama = parseInt(row.querySelector('.hama-input').value) || 0;
+            const bb = parseInt(row.querySelector('.bb-input').value) || 0;
             const currentDigestGSpan = row.querySelector('.current-digest-g');
             const cumulativeDigestGSpan = row.querySelector('.digest-g');
             const cumulativeDiffSpan = row.querySelector('.cumulative-diff');
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
             runningCumulativeTotalDiff += currentRowDiff; // Accumulate for cumulative diff
 
             // Update cumulative diff span
-            cumulativeDiffSpan.textContent = runningCumulativeTotalDiff.toFixed(1);
+            cumulativeDiffSpan.textContent = Math.round(runningCumulativeTotalDiff);
         });
         updateTotalCumulativeDiff();
     };
@@ -102,9 +102,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // digestGのテキストから数値をパースするヘルパー関数
     const parseDigestG = (text) => {
         if (text.includes('[ - ]')) {
-            return 0.0;
+            return 0;
         }
-        return parseFloat(text.replace('[ + ]', '')) || 0;
+        return parseInt(text.replace('[ + ]', '')) || 0;
     };
 
     // 直近差枚の合計を更新する関数（最終行の累積差枚を表示）
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            currentCumulativeDiffSpan.textContent = finalCumulativeDiff.toFixed(1);
+            currentCumulativeDiffSpan.textContent = Math.round(finalCumulativeDiff);
             if (finalCumulativeDiff > 0) {
                 currentCumulativeDiffSpan.classList.remove('negative');
                 currentCumulativeDiffSpan.classList.add('positive');
