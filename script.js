@@ -82,11 +82,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!(hama === 0 && bb === 0)) {
                 individualRowDigestG = hama + (bb * randomBBG);
             }
-            currentDigestGSpan.textContent = (hama === 0 && bb === 0) ? '0.0' : `${individualRowDigestG.toFixed(1)}`;
+            currentDigestGSpan.textContent = (hama === 0 && bb === 0) ? '0' : `${Math.floor(individualRowDigestG)}`;
 
             // Accumulate for cumulative digestG
             runningCumulativeDigestG += individualRowDigestG;
-            cumulativeDigestGSpan.textContent = (hama === 0 && bb === 0) ? '0.0' : `${runningCumulativeDigestG.toFixed(1)}`;
+            cumulativeDigestGSpan.textContent = (hama === 0 && bb === 0) ? '0' : `${Math.floor(runningCumulativeDigestG)}`;
 
 
             // Calculate individual row diff
