@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>北斗直近累積差枚CK - たかどらのスロ塾</title>
+    <meta name="description" content="北斗の拳スマスロの直近累積差枚をチェックできるツールです。設定判別や立ち回りの参考にどうぞ。">
+    <meta name="keywords" content="北斗の拳,スマスロ,直近累積差枚,設定判別,立ち回り,たかどらのスロ塾">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7700000000000000" crossorigin="anonymous"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+</head>
+<body>
+    
+
+    <main>
+        <section class="hero">
+            <h2>北斗1600G差枚確認ツール</h2>
+            
+        </section>
+
+        <section class="content">
+            
+            <ol>
+                
+            </ol>
+
+            <div class="tool-container">
+                <div class="cumulative-data">
+                    <div class="cumulative-header">
+                        <span>回数</span>
+                        <span>ハマリ (G)</span>
+                        <span>BB連</span>
+                        <span>当該消化G</span>
+                        <span>累計消化G数</span>
+                        <span>累積差枚</span>
+                        <span></span>
+                    </div>
+                    <div id="dataRows">
+                        <div class="data-row">
+                            <span>前回</span>
+                            <input type="number" class="hama-input" value="0.0">
+                            <input type="number" class="bb-input" value="0.0">
+                            <span class="current-digest-g">[ - ]0.0</span>
+                            <span class="digest-g">[ - ]0.0</span>
+                            <span class="cumulative-diff">0.0</span>
+                            <button class="delete-row">削除</button>
+                        </div>
+                        <div class="data-row">
+                            <span>前々回</span>
+                            <input type="number" class="hama-input" value="0.0">
+                            <input type="number" class="bb-input" value="0.0">
+                            <span class="current-digest-g">[ - ]0.0</span>
+                            <span class="digest-g">[ - ]0.0</span>
+                            <span class="cumulative-diff">0.0</span>
+                            <button class="delete-row">削除</button>
+                        </div>
+                        <div class="data-row">
+                            <span>3回前</span>
+                            <input type="number" class="hama-input" value="0.0">
+                            <input type="number" class="bb-input" value="0.0">
+                            <span class="current-digest-g">[ - ]0.0</span>
+                            <span class="digest-g">[ - ]0.0</span>
+                            <span class="cumulative-diff">0.0</span>
+                            <button class="delete-row">削除</button>
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button id="addRow">行を追加</button>
+                        <button id="shiftDown">下にシフト</button>
+                        <button id="clearAll">クリア</button>
+                    </div>
+                    <div class="current-diff">
+                        直近差枚: <span id="currentCumulativeDiff">0.0</span>
+                    </div>
+                </div>
+
+                
+            </div>
+        </section>
+    </main>
+
+    
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+/* style.css - 推測に基づいて作成されたプレースホルダー */
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1em 0;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+main {
+    padding: 20px;
+    max-width: 960px;
+    margin: 20px auto;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.hero {
+    text-align: center;
+    padding: 40px 20px;
+    background-color: #e2e2e2;
+    margin-bottom: 20px;
+}
+
+.hero h2 {
+    color: #333;
+}
+
+.content h3 {
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.tool-container {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+/* 新しいUI要素のスタイル */
+.cumulative-data {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.cumulative-header,
+.data-row {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 1fr 0.5fr; /* 回数, ハマリ, BB連, 当該消化G, 消化G, 累積差枚, 削除ボタン */
+    gap: 10px;
+    padding: 8px 0;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+
+.cumulative-header {
+    font-weight: bold;
+    background-color: #e9ecef;
+    border-top: 1px solid #eee;
+}
+
+.data-row input[type="number"] {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.data-row .digest-g,
+.data-row .cumulative-diff {
+    text-align: center;
+}
+
+.data-row .delete-row {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.data-row .delete-row:hover {
+    background-color: #c82333;
+}
+
+.button-group {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.button-group button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button-group button:hover {
+    background-color: #0056b3;
+}
+
+.current-diff {
+    margin-top: 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: right;
+}
+
+.current-diff #currentCumulativeDiff.positive {
+    color: blue;
+}
+
+.current-diff #currentCumulativeDiff.negative {
+    color: red;
+}
+
+.usage-toggle {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.usage-toggle button {
+    background-color: #6c757d;
+    color: #fff;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.usage-toggle button:hover {
+    background-color: #5a6268;
+}
+
+.usage-content {
+    margin-top: 15px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.usage-content ul {
+    list-style-type: disc;
+    margin-left: 20px;
+}
+
+.usage-content ol {
+    list-style-type: decimal;
+    margin-left: 20px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+    margin-top: 20px;
+}
