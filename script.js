@@ -53,11 +53,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 行番号を更新する関数
     const updateRowNumbers = () => {
-        Array.from(dataRowsContainer.children).forEach((row, index) => {
+        const rows = Array.from(dataRowsContainer.children);
+        rows.forEach((row, index) => {
             const span = row.querySelector('span');
             if (span) {
-                const labels = ["前回", "前々回", "3回前"];
-                span.textContent = labels[index] || `${index + 1}回目`;
+                if (index === rows.length - 1) {
+                    span.textContent = '当該';
+                } else {
+                    span.textContent = `${index + 1}回目`;
+                }
             }
         });
     };
@@ -74,13 +78,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const cumulativeDigestGSpan = row.querySelector('.digest-g');
             const cumulativeDiffSpan = row.querySelector('.cumulative-diff');
 
-            // Retrieve the stored randomBBG for this row
-            const randomBBG = parseFloat(row.querySelector('.bb-input').dataset.randomBbg) || 0;
-
             // Calculate individual row's digestG
             let individualRowDigestG = 0;
             if (!(hama === 0 && bb === 0)) {
-                individualRowDigestG = hama + (bb * randomBBG);
+                individualRowDigestG = hama + (bb * 40);
             }
             currentDigestGSpan.textContent = (hama === 0 && bb === 0) ? '0' : `${Math.floor(individualRowDigestG)}`;
 
@@ -149,6 +150,68 @@ document.addEventListener('DOMContentLoaded', () => {
             currentCumulativeDiffSpan.textContent = '0.0';
             currentCumulativeDiffSpan.classList.remove('positive', 'negative');
         }
+
+        // 狙い目G数の計算と表示
+        const recommendedGSpan = document.getElementById('recommendedG');
+        const playableStatusSpan = document.getElementById('playableStatus');
+        let recommendedGValue = 0;
+        let recommendedGText = '-';
+        const finalDiff = parseFloat(currentCumulativeDiffSpan.textContent) || 0;
+
+        if (finalDiff >= 1500) {
+            recommendedGText = '670G～';
+            recommendedGValue = 670;
+        } else if (finalDiff >= 1250) {
+            recommendedGText = '640G～';
+            recommendedGValue = 640;
+        } else if (finalDiff >= 1000) {
+            recommendedGText = '620G～';
+            recommendedGValue = 620;
+        } else if (finalDiff >= 750) {
+            recommendedGText = '580G～';
+            recommendedGValue = 580;
+        } else if (finalDiff >= 500) {
+            recommendedGText = '540G～';
+            recommendedGValue = 540;
+        } else if (finalDiff >= 250) {
+            recommendedGText = '510G～';
+            recommendedGValue = 510;
+        } else if (finalDiff >= 0) {
+            recommendedGText = '480G～';
+            recommendedGValue = 480;
+        } else if (finalDiff >= -250) {
+            recommendedGText = '450G～';
+            recommendedGValue = 450;
+        } else if (finalDiff >= -500) {
+            recommendedGText = '430G～';
+            recommendedGValue = 430;
+        } else if (finalDiff >= -750) {
+            recommendedGText = '400G～';
+            recommendedGValue = 400;
+        } else if (finalDiff >= -1000) {
+            recommendedGText = '380G～';
+            recommendedGValue = 380;
+        } else if (finalDiff >= -1250) {
+            recommendedGText = '350G～';
+            recommendedGValue = 350;
+        } else {
+            recommendedGText = '330G～';
+            recommendedGValue = 330;
+        }
+        recommendedGSpan.textContent = recommendedGText;
+
+        // 「打てる！」の判定と表示
+        if (lastRow) {
+            const currentDigestG = parseInt(lastRow.querySelector('.current-digest-g').textContent) || 0;
+            if (currentDigestG >= recommendedGValue) {
+                playableStatusSpan.textContent = '打てる！';
+                playableStatusSpan.style.color = 'green';
+            } else {
+                playableStatusSpan.textContent = '';
+            }
+        } else {
+            playableStatusSpan.textContent = '';
+        }
     };
 
     // 初期行のイベントリスナーを設定
@@ -187,11 +250,10 @@ document.addEventListener('DOMContentLoaded', () => {
     shiftDownButton.addEventListener('click', () => {
         const firstRow = dataRowsContainer.firstElementChild;
         if (firstRow) {
-            const hama = parseFloat(firstRow.querySelector('.hama-input').value) || 0;
-            const bb = parseFloat(firstRow.querySelector('.bb-input').value) || 0;
+            const hama = parseInt(firstRow.querySelector('.hama-input').value) || 0;
+            const bb = parseInt(firstRow.querySelector('.bb-input').value) || 0;
             const newRow = createRow(hama, bb); // createRow will generate a new randomBBG for this new row
             dataRowsContainer.insertBefore(newRow, firstRow);
-            firstRow.remove(); // 元の最初の行を削除
             updateRowNumbers();
             updateCumulativeValues();
         }
@@ -199,12 +261,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 「クリア」ボタンのイベントリスナー
     clearAllButton.addEventListener('click', () => {
-        dataRowsContainer.innerHTML = ''; // すべての行を削除
-        // 初期行を3つ追加
-        dataRowsContainer.appendChild(createRow());
-        dataRowsContainer.appendChild(createRow());
-        dataRowsContainer.appendChild(createRow());
-        updateRowNumbers();
+        Array.from(dataRowsContainer.children).forEach(row => {
+            row.querySelector('.hama-input').value = 0;
+            row.querySelector('.bb-input').value = 0;
+        });
         updateCumulativeValues();
     });
 
