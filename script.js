@@ -111,43 +111,43 @@ document.addEventListener('DOMContentLoaded', () => {
     // 直近差枚の合計を更新する関数（最終行の累積差枚を表示）
     const updateTotalCumulativeDiff = () => {
         const allRows = Array.from(dataRowsContainer.children);
-        const lastRow = allRows[allRows.length - 1];
+        const lastRow = allRows[allRows.length - 1]; // This is the "当該" row
+        const secondToLastRow = allRows[allRows.length - 2]; // This is the row *before* "当該"
 
-        if (lastRow) {
-            const lastRowCumulativeDiff = parseFloat(lastRow.querySelector('.cumulative-diff').textContent) || 0;
-            const lastRowDigestGText = lastRow.querySelector('.digest-g').textContent;
-            const lastRowDigestG = parseDigestG(lastRowDigestGText);
+        let finalCumulativeDiff = 0; // Default to 0
 
-            let finalCumulativeDiff = lastRowCumulativeDiff;
+        if (secondToLastRow) { // If there's at least two rows
+            const secondToLastRowCumulativeDiff = parseFloat(secondToLastRow.querySelector('.cumulative-diff').textContent) || 0;
+            const secondToLastRowDigestGText = secondToLastRow.querySelector('.digest-g').textContent;
+            const secondToLastRowDigestG = parseDigestG(secondToLastRowDigestGText);
 
-            const remainingG = lastRowDigestG - 1600;
+            finalCumulativeDiff = secondToLastRowCumulativeDiff; // Start with the cumulative diff of the second to last row
 
-            if (remainingG >= 0) {
-                for (let i = 0; i < allRows.length; i++) {
+            const remainingGForPrevious = secondToLastRowDigestG - 1600;
+
+            if (remainingGForPrevious >= 0) {
+                // Iterate through rows *before* the second to last row
+                for (let i = 0; i < allRows.length - 1; i++) {
                     const row = allRows[i];
                     const currentRowDigestGText = row.querySelector('.digest-g').textContent;
                     const currentRowDigestG = parseDigestG(currentRowDigestGText);
                     const currentRowCumulativeDiff = parseFloat(row.querySelector('.cumulative-diff').textContent) || 0;
 
-                    if (currentRowDigestG >= remainingG) {
-                        finalCumulativeDiff = lastRowCumulativeDiff - currentRowCumulativeDiff;
+                    if (currentRowDigestG >= remainingGForPrevious) {
+                        finalCumulativeDiff = secondToLastRowCumulativeDiff - currentRowCumulativeDiff;
                         break;
                     }
                 }
             }
-
-            currentCumulativeDiffSpan.textContent = Math.round(finalCumulativeDiff);
-            if (finalCumulativeDiff > 0) {
-                currentCumulativeDiffSpan.classList.remove('negative');
-                currentCumulativeDiffSpan.classList.add('positive');
-            } else if (finalCumulativeDiff < 0) {
-                currentCumulativeDiffSpan.classList.remove('positive');
-                currentCumulativeDiffSpan.classList.add('negative');
-            } else {
-                currentCumulativeDiffSpan.classList.remove('positive', 'negative');
-            }
+        }
+        currentCumulativeDiffSpan.textContent = Math.round(finalCumulativeDiff);
+        if (finalCumulativeDiff > 0) {
+            currentCumulativeDiffSpan.classList.remove('negative');
+            currentCumulativeDiffSpan.classList.add('positive');
+        } else if (finalCumulativeDiff < 0) {
+            currentCumulativeDiffSpan.classList.remove('positive');
+            currentCumulativeDiffSpan.classList.add('negative');
         } else {
-            currentCumulativeDiffSpan.textContent = '0.0';
             currentCumulativeDiffSpan.classList.remove('positive', 'negative');
         }
 
